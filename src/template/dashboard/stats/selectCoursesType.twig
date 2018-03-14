@@ -1,0 +1,29 @@
+{% include 'dashboard/components/headerDashboard.twig' %}
+{% include 'dashboard/components/menuDashboard.twig' %}
+<div class="page">
+    <main>
+        <div class="breadcrumb grey lighten-3">
+            <h6>{{ function.getCollege(college) }} / {{ function.getSection(section) }} / Cursuri</h6>
+        </div>
+        <div class="card custom-card">
+            <table>
+                <tbody>
+                    <form action="{{ path_for('postStatsCourses') }}" method="post">
+                        <tr>
+                            <td class="right-align">An: </td>
+                            <td>
+                                <div class="input-field">
+                                    <input type="text" name="year" placeholder="Introduceti anul" max="4">
+                                    <input type="hidden" name="college" value="{{ college }}">
+                                    <input type="hidden" name="section" value="{{ section }}">
+                                </div>
+                            </td>
+                            <td><button type="submit" class="btn waves-effect waves-light">Afiseaza</button> </td>
+                        </tr>
+                    </form>
+                </tbody>
+            </table>
+        </div>
+    </main>
+</div>
+{% include 'dashboard/components/footerDashboard.twig' %}

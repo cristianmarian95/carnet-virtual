@@ -1,0 +1,42 @@
+{% include 'dashboard/components/headerDashboard.twig' %}
+<div class="page">
+    {% include'dashboard/components/menuDashboard.twig' %}
+    <main>
+        <div class="breadcrumb grey lighten-3">
+            <h6>Profil utilizator</h6>
+        </div>
+        <div class="card custom-card">
+            <table class="striped">
+                <tbody>
+                    <tr>
+                        <td>Nume</td>
+                        <td>{{ profil.name }}</td>
+                    </tr>
+                    <tr>
+                        <td>Prenume</td>
+                        <td>{{ profil.lastname }}</td>
+                    </tr>
+                    {% if session.get('perms') == 0 %}
+                    <tr>
+                        <td>Numar matricol</td>
+                        <td>{{ profil.username }}</td>
+                    </tr>
+                    <tr>
+                        <td>An</td>
+                        <td>{{ profil.year }}</td>
+                    </tr>
+                    <tr>
+                        <td>Factulate</td>
+                        <td>{{ function.getCollege(function.getCollegeID(profil.allocation)) }}</td>
+                    </tr>
+                    <tr>
+                        <td>Specializare</td>
+                        <td>{{ function.getSection(function.getSectionID(profil.allocation)) }}</td>
+                    </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </main>
+</div>
+{% include 'dashboard/components/footerDashboard.twig' %}

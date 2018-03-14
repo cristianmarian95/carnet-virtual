@@ -1,0 +1,24 @@
+{% include 'dashboard/components/headerDashboard.twig' %}
+{% include 'dashboard/components/menuDashboard.twig' %}
+<div class="page">
+    <main>
+        <div class="breadcrumb grey lighten-3">
+            <h6>{{ function.getCollege(college) }}</h6>
+        </div>
+        <div class="card custom-card">
+            <table class="striped">
+                <tbody>
+                {% for allocation in collegeSections %}
+                    <tr>
+                        <td>{{  function.getSection(allocation.section) }}</td>
+                        <td>Nr. Studenti: <b>{{ function.getStudentsNr(allocation.id) }}</b></td>
+                        <td><a href="{{ path_for('getStatsStudents') }}/{{ allocation.college }}/{{ allocation.section }}" class="btn waves-effect waves-light">Studenti</a> </td>
+                        <td><a href="{{ path_for('getStatsCourses') }}/{{ allocation.college }}/{{ allocation.section }}" class="btn waves-effect waves-light">Cursuri</a> </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </main>
+</div>
+{% include 'dashboard/components/footerDashboard.twig' %}

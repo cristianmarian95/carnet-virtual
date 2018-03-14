@@ -1,0 +1,79 @@
+{% include 'dashboard/components/headerDashboard.twig' %}
+<div class="page">
+    {% include'dashboard/components/menuDashboard.twig' %}
+    <main>
+        <div class="breadcrumb grey lighten-3">
+            <h6>Profil utilizator</h6>
+        </div>
+        <div class="card custom-card">
+            <form action="{{ path_for('postAddCourses') }}" method="post">
+                <table class="striped">
+                    <tbody>
+                        <tr>
+                            <td class="right-align">Nume curs</td>
+                            <td>
+                                <div class="input-field">
+                                    <input type="text" name="name">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="right-align">Numar credite</td>
+                            <td>
+                                <div class="input-field">
+                                    <input type="number" name="credits">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="right-align">Semetru</td>
+                            <td>
+                                <div class="input-field">
+                                    <select name="sem">
+                                        <option value="" disabled selected>Selecteaza anul</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                    </select>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="right-align">Anul</td>
+                            <td>
+                                <div class="input-field">
+                                    <select name="year">
+                                        <option value="" disabled selected>Selecteaza anul</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                    </select>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="right-align">Sectiune</td>
+                            <td>
+                                <div class="input-field">
+                                    <select name="section">
+                                        <option value="" disabled selected>Selecteaza sectiunea</option>
+                                        {% for allocation in allocations %}
+                                            <option value="{{ allocation.id }}" >{{  function.getCollege(allocation.college) }} - {{  function.getSection(allocation.section) }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </td>
+                        </tr>
+                    <tr>
+                        <td></td>
+                        <td>
+                            <button type="submit" class="waves-effect waves-light btn">Adauga!</button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </form>
+        </div>
+    </main>
+</div>
+{% include 'dashboard/components/footerDashboard.twig' %}

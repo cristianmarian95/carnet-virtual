@@ -1,0 +1,47 @@
+{% include 'dashboard/components/headerDashboard.twig' %}
+<div class="page">
+    {% include'dashboard/components/menuDashboard.twig' %}
+    <main>
+        <div class="breadcrumb grey lighten-3">
+            <h6>Note student</h6>
+        </div>
+        <div class="card custom-card">
+            <h4>Situatie matricola: {{ user.name }} {{ user.lastname }}</h4>
+        </div>
+        <div class="card custom-card">
+            <table class="striped">
+                <thead>
+                <tr>
+                    <th>Disciplina</th>
+                    <th>Semestru</th>
+                    <th>Nr. Credite</th>
+                    <th>Nota finala</th>
+                    <th>Setari</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for course in function.getCourses(user.allocation) %}
+                <form action="{{ path_for('postUpdateGrades') }}" method="post">
+                    <tr>
+                        <td>{{ course.name }}</td>
+                        <td>Sem. {{ course.sem }} </td>
+                        <td>{{ course.credits }}</td>
+                            <td>
+                                <div class="input-field">
+                                    <input type="text" name="grade" value="{{ function.getGrades(course.id, user.id) }}" placeholder="Introduceti nota (1-10)">
+                                </div>
+                            </td>
+                            <td>
+                                <input type="hidden" value="{{ course.id }}" name="course">
+                                <input type="hidden" value="{{ user.id }}" name="uid">
+                                <button type="submit" class="btn green waves-effect waves-light">Seteaza</button>
+                            </td>
+                    </tr>
+                </form>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </main>
+</div>
+{% include 'dashboard/components/footerDashboard.twig' %}

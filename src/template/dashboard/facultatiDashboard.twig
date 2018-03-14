@@ -1,0 +1,146 @@
+{% include 'dashboard/components/headerDashboard.twig' %}
+<div class="page">
+    {% include'dashboard/components/menuDashboard.twig' %}
+    <main>
+        <div class="breadcrumb grey lighten-3">
+            <h6>Lista facultati</h6>
+        </div>
+        <div class="card custom-card">
+            <table class="striped">
+                <tbody>
+                    <tr>
+                        <form action="{{ path_for('postAddFacultate') }}" method="post">
+                            <td>Nume facultate:</td>
+                            <td>
+                                <div class="input-field">
+                                    <input type="text" name="facultate" placeholder="Numele facultatii">
+                                </div>
+                            </td>
+                            <td><button type="submit" class="waves-effect waves-light btn">Adauga!</button></td>
+                        </form>
+                    </tr>
+                    <tr>
+                        <form action="{{ path_for('postAddSectiune') }}" method="post">
+                            <td>Nume sectiune:</td>
+                            <td>
+                                <div class="input-field">
+                                    <input type="text" name="sectiune" placeholder="Numele sectiune">
+                                </div>
+                            </td>
+                            <td><button type="submit" class="waves-effect waves-light btn">Adauga!</button></td>
+                        </form>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="card custom-card">
+            <form action="{{ path_for('postAddAtribuire') }}" method="post">
+                <div class="row">
+                    <div class="col s3 input-field">
+                        <p>Atribuire de sectii pe facultati</p>
+                    </div>
+                    <div class="input-field col s3">
+                        <select name="college">
+                            <option value="" disabled selected>Selecteaza facultatea</option>
+                            {% for college in colleges %}
+                                    <option value="{{ college.id }}">{{ college.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="input-field col s3">
+                        <select name="section">
+                            <option value="" disabled selected>Selecteaza sectiunea</option>
+                            {% for section in sections %}
+                                <option value="{{ section.id }}">{{ section.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col s3 input-field"><button type="submit" class="waves-effect waves-light btn">Atribuie!</button> </div>
+                </div>
+            </form>
+        </div>
+        <div class="card custom-card">
+            <div class="row">
+                <div class="col m4 s12">
+                    <h5>Lista atribuiri</h5>
+                    <table class="striped">
+                        <tbody>
+                        {% for allocation in allocations %}
+                            <form action="{{ path_for('postDeleteAtribuire') }}" method="post">
+                                <tr>
+                                    <td>{{  function.getCollege(allocation.college) }} - {{  function.getSection(allocation.section) }}</td>
+                                    <td>
+                                        <input type="hidden" name="allocation" value="{{ allocation.id }}"><a class="waves-effect waves-light btn modal-trigger red" href="#modal-allocation-{{ allocation.id }}">Sterge!</a>
+                                        <div id="modal-allocation-{{ allocation.id }}" class="modal">
+                                            <div class="modal-content">
+                                                <h4>Atentie</h4>
+                                                <p>Prin stergea sectiuni {{  function.getSection(allocation.section) }} repartizata facultatii {{  function.getCollege(allocation.college) }} se vor sterge automat si toti studentii repartizati sectiuni.</p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="submit" class="waves-effect waves-light btn red">Confirma</button>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </form>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col m4 s12">
+                    <h5>Lista sectii</h5>
+                    <table class="striped">
+                        <tbody>
+                            {% for section in sections %}
+                                <form action="{{ path_for('postDeleteSectiune') }}" method="post">
+                                    <tr>
+                                        <td>{{ section.name }}</td>
+                                        <td>
+                                            <input type="hidden" name="section" value="{{ section.id }}"><a class="waves-effect waves-light btn modal-trigger red" href="#modal-section-{{ section.id }}">Sterge!</a>
+                                            <div id="modal-section-{{ section.id }}" class="modal">
+                                                <div class="modal-content">
+                                                    <h4>Atentie</h4>
+                                                    <p>Prin stergerea sectiunii {{ section.name }} se vor sterge automat toate alocarile sectiunii catre facultati.</p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                   <button type="submit" class="waves-effect waves-light btn red">Confirma</button>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </form>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col m4 s12">
+                    <h5>Lista facultati</h5>
+                    <table class="striped">
+                        <tbody>
+                        {% for college in colleges %}
+                            <form action="{{ path_for('postDeleteFacultate') }}" method="post">
+                                <tr>
+                                    <td>{{ college.name }}</td>
+                                    <td>
+                                        <input type="hidden" name="college" value="{{ college.id }}"><a class="waves-effect waves-light btn modal-trigger red" href="#modal-college-{{ college.id }}">Sterge!</a>
+                                        <div id="modal-college-{{ college.id }}" class="modal">
+                                            <div class="modal-content">
+                                                <h4>Atentie</h4>
+                                                <p>Prin stergerea facultatii {{ college.name }} se vor sterge automat toti studentii de la facultatea respectiva.</p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="submit" class="waves-effect waves-light btn red">Confirma</button>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </form>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+{% include 'dashboard/components/footerDashboard.twig' %}

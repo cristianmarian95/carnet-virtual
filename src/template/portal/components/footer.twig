@@ -1,0 +1,14 @@
+        <!--Import jQuery before materialize.js-->
+        <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+        <script type="text/javascript" src="{{ url }}/resources/js/materialize.min.js"></script>
+        <script>
+            $(".button-collapse").sideNav();
+            $(document).ready(function() {
+                Materialize.updateTextFields();
+            });
+        </script>
+        {% if flash.getMessage('error')[0] %}
+            <script type="text/javascript"> Materialize.toast('{{ flash.getMessage('error')[0] }}', 4000); </script>
+        {% endif %}
+    </body>
+</html>

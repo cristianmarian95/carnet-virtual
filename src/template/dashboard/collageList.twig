@@ -1,0 +1,42 @@
+{% include 'dashboard/components/headerDashboard.twig' %}
+{% include 'dashboard/components/menuDashboard.twig' %}
+<div class="page">
+    <main>
+        <div class="breadcrumb grey lighten-3">
+            <h6>Lista facultati</h6>
+        </div>
+        <div class="card custom-card">
+            <div class="row">
+                <div class="col s12">
+                    <h5>Lista facultati</h5>
+                    <table class="striped">
+                        <tbody>
+                        {% for college in colleges %}
+                            <form action="{{ path_for('postDeleteAtribuire') }}" method="post">
+                                <tr>
+                                    <td><b>{{  college.name }}</b></td>
+                                    <td>Nr. studenti: <b>{{ function.getStudentsTotalNr(college.id) }}</b></a></td>
+                                    <td><a href="{{ path_for('getStatsSections') }}/{{ college.id }}" class="btn waves-effect waves-light">Lista Sectii</a></td>
+                                    <td>
+                                        <input type="hidden" name="college" value="{{ college.id }}"><a class="waves-effect waves-light btn modal-trigger red" href="#modal-college-{{ college.id }}">Sterge!</a>
+                                        <div id="modal-college-{{ college.id }}" class="modal">
+                                            <div class="modal-content">
+                                                <h4>Atentie</h4>
+                                                <p>Prin stergerea facultatii {{ college.name }} se vor sterge automat toti studentii de la facultatea respectiva.</p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="submit" class="waves-effect waves-light btn red">Confirma</button>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </form>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+{% include 'dashboard/components/footerDashboard.twig' %}

@@ -1,0 +1,32 @@
+{% include 'dashboard/components/headerDashboard.twig' %}
+<div class="page">
+    {% include'dashboard/components/menuDashboard.twig' %}
+    <main>
+        <div class="breadcrumb grey lighten-3">
+            <h6>Note student</h6>
+        </div>
+        <div class="card custom-card">
+            <table class="striped">
+                <thead>
+                <tr>
+                    <th>Disciplina</th>
+                    <th>Semestru</th>
+                    <th>Nota finala</th>
+                    <th>Nr. Credite</th>
+                </tr>
+                </thead>
+                <tbody>
+                    {% for course in function.getCourses(profil.allocation) %}
+                        <tr>
+                            <td>{{ course.name }}</td>
+                            <td>{{ course.sem }} </td>
+                            <td>{{ function.getGrades(course.id, profil.id) }}</td>
+                            <td>{{ course.credits }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </main>
+</div>
+{% include 'dashboard/components/footerDashboard.twig' %}

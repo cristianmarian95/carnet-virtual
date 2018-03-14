@@ -1,0 +1,74 @@
+{% include 'dashboard/components/headerDashboard.twig' %}
+<div class="page">
+    {% include'dashboard/components/menuDashboard.twig' %}
+    <main>
+        <div class="breadcrumb grey lighten-3">
+            <h6>Profil utilizator</h6>
+        </div>
+        <div class="card custom-card">
+            <form action="{{ path_for('postUpdateStudent') }}" method="post">
+                <table class="striped">
+                    <tbody>
+                    <tr>
+                        <td class="right-align">Nume</td>
+                        <td>
+                            <div class="input-field">
+                                <input type="text" name="name" placeholder="Numele" value="{{ student.name }}">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="right-align">Prenume</td>
+                        <td>
+                            <div class="input-field">
+                                <input type="text" name="lastname" placeholder="Prenume" value="{{ student.lastname }}">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="right-align">An</td>
+                        <td>
+                            <div class="input-field">
+                                <select name="year">
+                                    <option value="{{ student.year }}" selected>{{ student.year }}</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                </select>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="right-align">Sectie</td>
+                        <td>
+                            <div class="input-field">
+                                <select name="section">
+                                    <option value="{{ student.allocation }}" selected>{{  function.getCollege(function.getCollegeID(student.allocation)) }} - {{  function.getSection(function.getSectionID(student.allocation)) }}</option>
+                                    {% for allocation in allocations %}
+                                        <option value="{{ allocation.id }}" >{{  function.getCollege(allocation.college) }} - {{  function.getSection(allocation.section) }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="right-align">Numar matricol</td>
+                        <td>
+                            <div class="input-field">
+                                <input type="text" value="{{ student.username }}" disabled>
+                                <input type="hidden" name="username" value="{{ student.username }}">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td><button type="submit" class="btn waves-effect waves-light">Modifica!</button> </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </form>
+        </div>
+    </main>
+</div>
+{% include 'dashboard/components/footerDashboard.twig' %}

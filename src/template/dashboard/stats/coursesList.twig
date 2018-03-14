@@ -1,0 +1,31 @@
+{% include 'dashboard/components/headerDashboard.twig' %}
+{% include 'dashboard/components/menuDashboard.twig' %}
+<div class="page">
+    <main>
+        <div class="card custom-card">
+            <table>
+                <thead>
+                <tr>
+                    <th>Curs</th>
+                    <th>An</th>
+                    <th>Semestru</th>
+                    <th>Sectiune</th>
+                    <th>Actiuni</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for course in courses %}
+                    <tr>
+                        <td>{{ course.name }}</td>
+                        <td>{{ course.year }}</td>
+                        <td>Sem. {{ course.sem }}</td>
+                        <td>{{ function.getCollege(function.getCollegeID(course.sid)) }} - {{ function.getSection(function.getSectionID(course.sid)) }}</td>
+                        <td><form action="{{ path_for('postDeleteCourses') }}" method="post"><input type="hidden" name="id" value="{{ course.id }}"><button type="submit" class="btn red waves-light waves-effect">Delete</button></form> </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </main>
+</div>
+{% include 'dashboard/components/footerDashboard.twig' %}
